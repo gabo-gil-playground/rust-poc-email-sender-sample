@@ -1,0 +1,57 @@
+[package]
+name = "rust-poc-email-sender-sample"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# main dependencies ########################################################
+# API framewrok dependencies
+axum = {version = "=0.8.8", features = ["http2", "ws", "multipart"]}
+tower-http = { version = "=0.6.8", features = ["catch-panic"] }
+
+# thread managment dependencies
+tokio = { version = "=1.49.0", features = ["full"] }
+async-trait = { version = "=0.1.89" }
+
+# JSON serialize and deserialize dependencies
+serde = { version = "=1.0.228", features = ["derive"] }
+serde_json = { version = "=1.0.149" }
+
+# logging dependencies
+log = { version = "=0.4.29" }
+log4rs = { version = "=1.4.0" }
+
+constcat = { version = "=0.6.1" }
+
+# other required crates ################################################################################################
+# ...
+# include creates with specific version or features here...
+# ...
+
+
+[dev-dependencies] # development dependencies - should not be exported
+# testing dependencies ################################################
+
+
+# other required testing crates ########################################################################################
+# add from here
+# ...
+
+########################################################################################################################
+# workaround to define IT context as feature just for test purposes ####################################################
+rust-poc-email-sender-sample = {path = ".", features = ["integration-test-context"]}
+
+########################################################################################################################
+[features]
+# workaround to define IT context as feature just for test purposes
+# based on https://stackoverflow.com/questions/73015087/specifying-dev-dependencies-through-cargo-feature-flags
+integration-test-context = []
+
+# optimize dev and test execution - based on https://doc.rust-lang.org/cargo/reference/profiles.html ###################
+[profile.dev] # these values are optimized - please, check with the tech team before modify any
+incremental = true # faster for dev purposes
+lto = "off" # better optimized code, using whole-program analysis, at the cost of longer linking time
+
+[profile.dev.build-override] # these values are optimized - please, check with the tech team before modify any
+opt-level = 0 # no optimizations - faster for dev purposes
+codegen-units = 256 # default is 256 - may speed up compile times, but may also produce slower code
