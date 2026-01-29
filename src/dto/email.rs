@@ -19,7 +19,7 @@ pub struct Email {
 mod tests {
     use crate::dto::email::Email;
 
-/// Scenario:
+    /// Scenario:
     /// Creates a Email struct with valid values
     /// Expectation:
     /// A Email with proper values should be created
@@ -36,7 +36,10 @@ mod tests {
         };
 
         assert_eq!(expected_target_address, email.target_address);
-        assert_eq!(expected_email_subject, email.email_subject.unwrap_or_default());
+        assert_eq!(
+            expected_email_subject,
+            email.email_subject.unwrap_or_default()
+        );
         assert_eq!(expected_email_body, email.email_body);
     }
 }

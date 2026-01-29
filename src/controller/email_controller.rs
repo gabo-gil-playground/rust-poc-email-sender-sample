@@ -1,14 +1,10 @@
 use std::sync::Arc;
 
-use axum::extract::{State};
+use axum::extract::State;
 use axum::http::StatusCode;
-use axum::{
-    Json, Router,
-    response::IntoResponse,
-    routing::{get},
-};
+use axum::{Json, Router, response::IntoResponse, routing::get};
 
-use crate::constant::constants::{API_EMAIL_SEND_PATH, API_EMAIL_MAIN_PATH};
+use crate::constant::constants::{API_EMAIL_MAIN_PATH, API_EMAIL_SEND_PATH};
 use crate::dto::email::Email;
 use crate::service::email_service::{DynEmailService, EmailService};
 
@@ -34,8 +30,7 @@ impl EmailControllerTrait for EmailController {
 
 /// Creates controller's routes
 fn create_routes() -> Router<DynEmailService> {
-    Router::new()
-        .route(API_EMAIL_SEND_PATH, get(map_send_email))
+    Router::new().route(API_EMAIL_SEND_PATH, get(map_send_email))
 }
 
 /// Maps send email end-point

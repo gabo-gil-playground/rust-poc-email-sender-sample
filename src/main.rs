@@ -4,8 +4,12 @@ use rust_poc_email_sender_sample::constant::constants::{
     API_SERVER_HOST_DEFAULT, API_SERVER_HOST_ENV_VAR, API_SERVER_PORT_DEFAULT,
     API_SERVER_PORT_ENV_VAR, LOGGING_CONFIG_FILE_DEFAULT, LOGGING_CONFIG_FILE_ENV_VAR,
 };
-use rust_poc_email_sender_sample::controller::email_controller::{EmailController, EmailControllerTrait};
-use rust_poc_email_sender_sample::controller::health_controller::{HealthController, HealthControllerTrait};
+use rust_poc_email_sender_sample::controller::email_controller::{
+    EmailController, EmailControllerTrait,
+};
+use rust_poc_email_sender_sample::controller::health_controller::{
+    HealthController, HealthControllerTrait,
+};
 
 /// App main function (multi-thread implemented by tokio dependency)
 ///
@@ -13,7 +17,8 @@ use rust_poc_email_sender_sample::controller::health_controller::{HealthControll
 /// logger configuration will be read from logging_config.yaml file from project´s root
 #[tokio::main]
 async fn main() {
-    let log_config_file = std::env::var(LOGGING_CONFIG_FILE_ENV_VAR).unwrap_or(String::from(LOGGING_CONFIG_FILE_DEFAULT));
+    let log_config_file = std::env::var(LOGGING_CONFIG_FILE_ENV_VAR)
+        .unwrap_or(String::from(LOGGING_CONFIG_FILE_DEFAULT));
     log4rs::init_file(log_config_file, Default::default()).unwrap();
 
     start_api_server().await;
@@ -23,10 +28,12 @@ async fn main() {
 async fn start_api_server() {
     info!("Axum server - starting...");
 
-    let api_server_host = std::env::var(API_SERVER_HOST_ENV_VAR).unwrap_or(String::from(API_SERVER_HOST_DEFAULT));
+    let api_server_host =
+        std::env::var(API_SERVER_HOST_ENV_VAR).unwrap_or(String::from(API_SERVER_HOST_DEFAULT));
     debug!("start_api_server - api server host retrieved OK");
 
-    let api_server_port = std::env::var(API_SERVER_PORT_ENV_VAR).unwrap_or(String::from(API_SERVER_PORT_DEFAULT));
+    let api_server_port =
+        std::env::var(API_SERVER_PORT_ENV_VAR).unwrap_or(String::from(API_SERVER_PORT_DEFAULT));
     debug!("start_api_port - api server host retrieved OK");
 
     let api_server_address = format!("{api_server_host}:{api_server_port}");
